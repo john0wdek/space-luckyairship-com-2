@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>幸运飞艇 · 知识库入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(165deg, #fbe9e7 0%, #ffdacc 35%, #fde2c8 65%, #fce4d6 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 1.2rem 4rem;
+            line-height: 1.6;
+            color: #3e2c1f;
+        }
+
+        .page-wrap {
+            max-width: 1080px;
+            width: 100%;
+        }
+
+        /* 主卡片容器 */
+        .knowledge-card {
+            background: rgba(255, 248, 240, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 40px 40px 32px 32px;
+            box-shadow: 0 18px 40px -12px rgba(160, 90, 50, 0.25),
+                        0 6px 18px rgba(200, 140, 95, 0.15);
+            padding: 2.8rem 2.4rem 3.2rem;
+            transition: box-shadow 0.2s;
+        }
+
+        /* 标题区 / 目录感布局 */
+        .hero-section {
+            margin-bottom: 2.6rem;
+            border-bottom: 1px solid #f0dccb;
+            padding-bottom: 1.8rem;
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #5d3b25;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-title small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #edd6c4;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: #4c3221;
+            margin-left: 10px;
+            letter-spacing: 0;
+        }
+
+        .hero-desc {
+            margin-top: 0.6rem;
+            font-size: 1.1rem;
+            color: #5f4432;
+            max-width: 80%;
+        }
+
+        /* 目录网格 — 知识库入口感 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem 1.8rem;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .grid-item {
+            background: #fffbf7;
+            border-radius: 28px;
+            padding: 1.4rem 1.6rem 1.6rem;
+            box-shadow: 0 2px 8px rgba(170, 120, 80, 0.08);
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+
+        .grid-item:hover {
+            background: #ffffff;
+            box-shadow: 0 8px 20px -8px rgba(150, 90, 50, 0.18);
+        }
+
+        .grid-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #683f25;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .grid-item h3::before {
+            content: "◈";
+            color: #b77d5a;
+            font-size: 1.2rem;
+            margin-right: 4px;
+        }
+
+        .grid-item p {
+            font-size: 0.98rem;
+            color: #4d3829;
+            margin-top: 0.2rem;
+            line-height: 1.65;
+        }
+
+        .grid-item .tag {
+            display: inline-block;
+            background: #f0d5c0;
+            border-radius: 40px;
+            padding: 0.1rem 0.9rem;
+            font-size: 0.75rem;
+            color: #4d3020;
+            font-weight: 500;
+            margin-top: 0.6rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* 说明区 + 提示区 并排布局 (目录感) */
+        .info-panel {
+            display: flex;
+            gap: 1.8rem;
+            margin: 2.2rem 0 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .info-block {
+            flex: 1 1 240px;
+            background: #faf1ea;
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem 1.8rem;
+            border-left: 5px solid #cb9c7c;
+        }
+
+        .info-block h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4e3426;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-block p {
+            font-size: 0.96rem;
+            color: #4a3427;
+        }
+
+        .info-block .badge {
+            background: #e7cfbc;
+            border-radius: 60px;
+            padding: 0 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #4b2e1b;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .tip-block {
+            flex: 1 1 200px;
+            background: #fcf3eb;
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem 1.8rem;
+            border-left: 5px solid #dbb08a;
+        }
+
+        .tip-block h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4e3426;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-block ul {
+            list-style: none;
+            margin-top: 0.3rem;
+        }
+
+        .tip-block li {
+            font-size: 0.93rem;
+            padding: 0.2rem 0;
+            color: #4f3829;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+        }
+
+        .tip-block li::before {
+            content: "•";
+            color: #b07956;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* 相关信息区 — FAQ摘要式 */
+        .rel-section {
+            background: #fffbf6;
+            border-radius: 32px;
+            padding: 1.6rem 2rem 2rem;
+            margin: 1.5rem 0 1.2rem;
+            box-shadow: inset 0 1px 4px #ecdccc;
+        }
+
+        .rel-section h4 {
+            font-size: 1.2rem;
+            font-weight: 550;
+            color: #583d2a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rel-section h4 span {
+            background: #edd3be;
+            border-radius: 30px;
+            padding: 0 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #3d271b;
+        }
+
+        .faq-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .faq-q {
+            font-weight: 550;
+            color: #4f3627;
+            font-size: 0.98rem;
+        }
+
+        .faq-a {
+            color: #4e3b2e;
+            font-size: 0.92rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid #e0c1ac;
+            margin-top: 0.15rem;
+        }
+
+        .faq-a a {
+            color: #884f2e;
+            text-decoration: none;
+            border-bottom: 1px dotted #b68462;
+            transition: border 0.1s;
+        }
+
+        .faq-a a:hover {
+            border-bottom: 2px solid #a06842;
+        }
+
+        /* 自然链接嵌入句子 */
+        .sentence-link {
+            color: #854f2d;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid #dbb49a;
+            transition: 0.1s;
+        }
+
+        .sentence-link:hover {
+            border-bottom: 2px solid #a0643c;
+            color: #663722;
+        }
+
+        /* 按钮感链接 (圆角) 用于突出入口 */
+        .btn-like {
+            display: inline-block;
+            background: #f3e2d4;
+            border-radius: 60px;
+            padding: 0.2rem 1.2rem 0.3rem;
+            font-weight: 500;
+            color: #4b2e1d;
+            text-decoration: none;
+            border: 1px solid #e3cbb6;
+            transition: background 0.15s, border 0.15s;
+            margin: 0 0.1rem;
+        }
+
+        .btn-like:hover {
+            background: #ebd3be;
+            border-color: #c99874;
+        }
+
+        .footer-note {
+            margin-top: 2.4rem;
+            font-size: 0.8rem;
+            color: #785e4b;
+            text-align: center;
+            border-top: 1px solid #e5cfbe;
+            padding-top: 1.2rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 760px) {
+            body {
+                padding: 1.2rem 0.8rem 3rem;
+            }
+            .knowledge-card {
+                padding: 1.8rem 1.2rem 2rem;
+                border-radius: 32px;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+                flex-wrap: wrap;
+            }
+            .hero-title small {
+                font-size: 0.8rem;
+                margin-left: 4px;
+            }
+            .hero-desc {
+                max-width: 100%;
+                font-size: 1rem;
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            .info-panel {
+                flex-direction: column;
+            }
+            .rel-section {
+                padding: 1.2rem 1rem 1.6rem;
+            }
+            .grid-item {
+                padding: 1.2rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .knowledge-card {
+                padding: 1.2rem 0.8rem 1.6rem;
+            }
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            .grid-item h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <div class="knowledge-card">
+
+            <!-- hero / 标题 + 简短说明 -->
+            <div class="hero-section">
+                <div class="hero-title">
+                    ✦ 幸运飞艇
+                    <small>主题知识库</small>
+                </div>
+                <div class="hero-desc">
+                    围绕关键词展开的背景信息、特点摘要、实用提示与常见疑问。<br>
+                    页面以目录式卡片组织，可快速浏览相关内容。
+                </div>
+            </div>
+
+            <!-- 目录感网格 — 特点、场景等 -->
+            <div class="content-grid">
+                <div class="grid-item">
+                    <h3>背景与主题</h3>
+                    <p>「幸运飞艇」这一概念常出现在娱乐、休闲与概率类话题中，其形式与赛艇、数字竞猜或模拟航行有所关联。在泛文化语境里，它也被用作氛围轻松的活动主题。</p>
+                    <span class="tag">概念延伸</span>
+                </div>
+                <div class="grid-item">
+                    <h3>常见特点</h3>
+                    <p>通常包含多艘“飞艇”或虚拟载具，每艘对应不同编号或标识。结果随机、节奏明快，参与者基于编号或组合进行判断。数字区间与排列方式有多种变体。</p>
+                    <span class="tag">随机 · 节奏</span>
+                </div>
+                <div class="grid-item">
+                    <h3>信息检索场景</h3>
+                    <p>用户常查找：基础规则说明、历史结果记录、术语解释、相关平台或社区。这部分内容通常分布在专题站点、互动论坛与指南页面中。</p>
+                    <span class="tag">知识入口</span>
+                </div>
+                <div class="grid-item">
+                    <h3>文化符号</h3>
+                    <p>飞艇象征快速、飘升与不可预测，结合“幸运”一词后，常出现在庆典活动、嘉年华或虚构世界观中。少数作品将其作为冒险元素的载体。</p>
+                    <span class="tag">符号·叙事</span>
+                </div>
+            </div>
+
+            <!-- 说明区 + 提示区 (并排) -->
+            <div class="info-panel">
+                <div class="info-block">
+                    <h4><span class="badge">i</span> 信息说明</h4>
+                    <p>本站点内容围绕相关关键词整理，属于知识汇总型介绍。页面结构偏向入口与索引，不提供实时数据或交互。如需获取更进一步的信息或服务，可前往主题站点 <a href="https://space-luckyairship.com" class="sentence-link">幸运飞艇</a> 了解更多。</p>
+                </div>
+                <div class="tip-block">
+                    <h4>✦ 提示</h4>
+                    <ul>
+                        <li>建议结合自身判断筛选信息</li>
+                        <li>注意识别信息来源与更新日期</li>
+                        <li>保持理性与适度原则</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 相关信息区 FAQ 摘要 -->
+            <div class="rel-section">
+                <h4>❓ 相关信息 <span>FAQ 摘要</span></h4>
+                <div class="faq-item">
+                    <div class="faq-q">“幸运飞艇”通常指向哪类内容？</div>
+                    <div class="faq-a">多数语境下指一种数字竞猜类模拟活动，以飞艇编号为元素；也可见于娱乐主题的页面或社区。核心站点可参考 <a href="https://space-luckyairship.com" class="btn-like">幸运飞艇</a> 提供的介绍。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">如何查找更系统的规则或数据？</div>
+                    <div class="faq-a">可以浏览相关主题站点或知识板块，部分社区有整理帖和术语表。通过 <a href="https://space-luckyairship.com" class="sentence-link">幸运飞艇</a> 的导航亦可找到其他资料。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">关键词背后是否有固定背景？</div>
+                    <div class="faq-a">“幸运飞艇”并无单一固定背景，常见于休闲类活动、虚拟赛事或主题文化中。不同平台定义与侧重点略有差异，建议以具体站点的说明为准。</div>
+                </div>
+                <div style="margin-top: 0.8rem; font-size:0.9rem; color:#5c4536; padding-left:0.3rem;">
+                    ⚡ 更多相关讨论可参考社区或指南页面。
+                </div>
+            </div>
+
+            <!-- 自然嵌入另一个链接（也是必须的 a 标签）-->
+            <div style="margin: 0.6rem 0 0.2rem; background: #f8ede4; border-radius: 40px; padding: 0.8rem 1.2rem; display: inline-block;">
+                <span style="font-size:0.95rem;">关于此主题，若需进一步阅读，可查看 <a href="https://space-luckyairship.com" class="sentence-link">幸运飞艇</a> 的相关内容。</span>
+            </div>
+
+            <!-- 底部 -->
+            <div class="footer-note">
+                — 知识库入口页面 · 内容基于公开信息整理 —
+            </div>
+
+        </div> <!-- end knowledge-card -->
+    </div> <!-- end page-wrap -->
+</body>
+</html>

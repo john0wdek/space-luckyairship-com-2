@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://john0wdek.github.io/space-luckyairship-com-2/sitemap.xml
